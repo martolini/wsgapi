@@ -1,26 +1,26 @@
 language: node_js
 node_js:
-  - 8
+- 8
 sudo: required
 services:
-  - docker
+- docker
 env:
-  - DOCKER_COMPOSE_VERSION=1.16.1
-
+- DOCKER_COMPOSE_VERSION=1.16.1
 before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-
+- sudo rm /usr/local/bin/docker-compose
+- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
+  -s`-`uname -m` > docker-compose
+- chmod +x docker-compose
+- sudo mv docker-compose /usr/local/bin
 before_script:
-  - docker-compose -f test.yml build
-
+- docker-compose -f test.yml build
 script:
-  - docker-compose -f test.yml run --rm api
-
+- docker-compose -f test.yml run --rm api
 after_success:
-  - docker-compose -f test.yml down
-  - docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
-  - docker build -t martolini/tvshow-rating-api .
-  - docker push martolini/tvshow-rating-api
+- docker-compose -f test.yml down
+- docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+- docker build -t martolini/tvshow-rating-api .
+- docker push martolini/tvshow-rating-api
+notifications:
+  slack:
+    secure: i8dk5rNsuP8I12nbbb5n0L9tJwqkO/CX9MNhW7mC4WOD6ZDFfwx9tgjZGHB1etPXloSmK8iSBf7vyenT8FH2lySciTCuyHPX95/mMYu5zXTDqyP7WEe5ArbaZIUyPZIyiaqAADw0O7kAQOX9sQCrvsc7pFTm0R1YtpK0NKw/26RXtLMzvF1xpbrseThmkQhnJVpgZv+rioWm1MVRCaLD7dSaxgugpNvc9/O6x5a3acNkujXP8MUWKJj/ou7zx0OpsG5OJzqHDSHIbAh7Tqa9Yld9JxHllbV6AY0kDSSbpX4bLUOUXgA8npcc2Zl1QLGloq/fqRP3J21oiikBWSpSy31um4jfITOV+HZUv51lvbNTETUIcElFJsonye3IloASdKLqo4q+xzxkRCNQQ62Av4Gamopdv9KAOOONRJ5+vxAM8kaiHaQYbss0piYxLL9vnG67v96ZF6eUbVToxtJQavGGFwqLPYdv4j6zZsQe4QMma2zZpwA5/2LxCuBS3wILQQPTRgdpZKWZ39gR3D8+xKDTsdMMl5ic8g920xuHNrje0t1uafxNPW+/gh6S22kreJOss6odWgnaULEupl+jeERg8Wsyw9mBiOe+0wwGO6pf8btV4fgbs5PsIelexRgK2DxjskCg1YgRZy0PFNnbHQvv/zKmTOLfuMDU09/YRvU=
