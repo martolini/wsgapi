@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Martin Røed",
+      "authorEmail": "msroed@gmail.com",
+      "authorUrl": ""
+    }
+  }
+}

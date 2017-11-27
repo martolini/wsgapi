@@ -1,0 +1,77 @@
+{
+  "name": "tvshow-api",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "",
+  "author": {
+    "name": "Martin Røed",
+    "email": "msroed@gmail.com",
+    "url": ""
+  },
+  "files": ["lib"],
+  "main": "lib/index.js",
+  "keywords": [""],
+  "devDependencies": {
+    "coveralls": "^2.13.1",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.1.0",
+    "eslint-config-prettier": "^2.4.0",
+    "eslint-config-xo": "^0.18.2",
+    "eslint-plugin-prettier": "^2.2.0",
+    "husky": "^0.14.3",
+    "jest": "^21.0.0",
+    "jest-cli": "^21.0.0",
+    "lint-staged": "^4.2.1",
+    "nsp": "^2.6.3",
+    "prettier": "^1.7.0",
+    "supertest": "^3.0.0"
+  },
+  "scripts": {
+    "prepublish": "nsp check",
+    "pretest": "eslint . --fix",
+    "precommit": "lint-staged",
+    "build": "docker build -t martolini/tvshow-rating-api .",
+    "run-docker":
+      "docker rm -f api || true && docker run -d --link redis:redis -p 8001:8001 -e=\"REDIS_HOST=redis\" -e \"OMDB_API_KEY=9f6ac5fb\" --name=api martolini/tvshow-rating-api",
+    "test": "jest",
+    "test:docker": "./run_test.sh",
+    "start": "node lib/index"
+  },
+  "lint-staged": {
+    "*.js": ["eslint --fix", "git add"],
+    "*.json": ["prettier --write", "git add"]
+  },
+  "eslintConfig": {
+    "extends": ["xo", "prettier"],
+    "env": {
+      "jest": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "printWidth": 90
+        }
+      ]
+    },
+    "plugins": ["prettier"]
+  },
+  "repository": "martolini/tvshow-api",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "bluebird": "^3.5.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-prom-bundle": "^3.2.1",
+    "lodash": "^4.17.4",
+    "pg": "^7.4.0",
+    "prom-client": "^10.2.2",
+    "redis": "^2.8.0"
+  }
+}
