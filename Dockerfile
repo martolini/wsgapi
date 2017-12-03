@@ -1,4 +1,4 @@
-FROM node:9-alpine
+FROM node:9
 
 RUN mkdir /app
 
@@ -12,5 +12,7 @@ ADD . /app
 WORKDIR /app
 
 EXPOSE 8001
+
+HEALTHCHECK CMD curl --fail localhost:8001/health || exit 1
 
 CMD ["yarn", "start"]
